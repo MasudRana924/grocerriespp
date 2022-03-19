@@ -8,6 +8,8 @@ import colors from './data/Colors';
 import categoriesData from './data/Products';
 import popularData from './data/Propular';
 import dailyData from './data/Daily';
+import offerData from './data/Offer';
+import summerData from './data/Summer';
 import Feather from 'react-native-vector-icons/Feather';
 Feather.loadFont();
 
@@ -83,7 +85,7 @@ export default function Home() {
             {
               backgroundColor: item.selected ? colors.primary : colors.white,
               marginLeft: item.id == 0 ? 20 : 0,
-              borderColor: item.selected ?'palegreen' :'gainsboro'
+              borderColor: item.selected ? 'palegreen' : 'gainsboro'
             },
           ]}>
           <Image source={item.image} style={styles.categoryItemImage} />
@@ -108,9 +110,42 @@ export default function Home() {
     );
   };
 
+  const renderOfferItem = ({ item }) => {
+    return (
+
+      <TouchableOpacity onPress={() => {
+        navigation.navigate("Vegitables");
+      }} >
+        <View
+          style={[
+            styles.offerItemWrapper
+          ]}>
+          <Image source={item.image} style={styles.offerItemImage} />
 
 
+        </View>
+      </TouchableOpacity>
+    );
+  };
 
+  const renderSummerItem = ({ item }) => {
+    return (
+
+      <TouchableOpacity onPress={() => {
+        navigation.navigate("Vegitables");
+      }} >
+        <View
+          style={[
+            styles.summerItemWrapper,
+           
+          ]}>
+          <Image source={item.image} style={styles.summerItemImage} />
+          <Text style={styles.categoryItemTitle}>{item.title}</Text>
+        
+        </View>
+      </TouchableOpacity>
+    );
+  };
   return (
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false} contentInsetAdjustmentBehavior="automatic">
@@ -163,25 +198,19 @@ export default function Home() {
         </View>
 
         {/* offer */}
-        <View style={styles.popularWrapper}>
-          <Text style={styles.popularTitle}>Offer</Text>
+        <View style={styles.categoriesWrapper}>
+          <Text style={styles.categoriesTitle}>Offers</Text>
           <View style={styles.categoriesListWrapper}>
-            <View style={{ flexDirection: 'row' }}>
-              <Image
-                style={styles.imgStyle}
-                source={{
-                  uri: 'https://img.freepik.com/free-vector/gradient-sale-background_23-2149038126.jpg?w=740',
-                }}
-              />
-              <Image
-                style={styles.imgStyleTwo}
-                source={{
-                  uri: 'https://img.freepik.com/free-vector/gradient-sale-background_23-2149038126.jpg?w=740',
-                }}
-              />
-            </View>
-
+            <FlatList
+              data={offerData}
+              renderItem={renderOfferItem}
+              keyExtractor={(item) => item.id}
+              // horizontal
+              showsHorizontalScrollIndicator={false}
+              numColumns={2}
+            />
           </View>
+
         </View>
 
         {/* dily */}
@@ -192,12 +221,28 @@ export default function Home() {
               data={dailyData}
               renderItem={renderDailyItem}
               keyExtractor={(item) => item.id}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+            
+            />
+          </View>
+        </View>
+
+        {/* summer */}
+        <View style={styles.categoriesWrapper}>
+          <Text style={styles.categoriesTitle}>Summer Fruits</Text>
+          <View style={styles.categoriesListWrapper}>
+            <FlatList
+              data={summerData}
+              renderItem={renderSummerItem}
+              keyExtractor={(item) => item.id}
               // horizontal
               showsHorizontalScrollIndicator={false}
               numColumns={2}
             />
           </View>
         </View>
+
 
         <Footer></Footer>
 
@@ -245,7 +290,7 @@ const styles = StyleSheet.create({
     flex: 1,
     color: "black",
     borderWidth: 2,
-    borderColor: "black",
+    borderColor: "gainsboro",
     height: 35,
     paddingLeft: 20
   },
@@ -254,7 +299,7 @@ const styles = StyleSheet.create({
     height: 40,
     width: 50,
     borderRadius: 10,
-    backgroundColor: "limegreen",
+    backgroundColor: "palegreen",
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: -5
@@ -351,13 +396,37 @@ const styles = StyleSheet.create({
   },
   dailyItemWrapper: {
     backgroundColor: '#F5CA48',
-    width:150,
+    width: 150,
     borderRadius: 20,
     marginRight: 20,
-    marginTop:10,
-    borderWidth:1
+    marginTop: 10,
+    borderWidth: 1
 
   },
+  offerItemWrapper:{
+    marginRight: 10,
+    marginTop:10
+    
+  },
+  offerItemImage:{
+    width:155,
+    height:150,
+    borderRadius:5
+  },
+   summerItemWrapper:{
+    marginRight: 5,
+    marginTop:10,
+    borderWidth:1,
+    borderColor:'gainsboro',
+    borderRadius:5
+    
+  },
+
+  summerItemImage:{
+    width:155,
+    height:150,
+    borderRadius:5
+  }
 
 
 
